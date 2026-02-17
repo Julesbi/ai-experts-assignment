@@ -1,63 +1,89 @@
 # AI Experts Assignment (JS/TS)
 
-This assignment evaluates your ability to:
+This assignment evaluates the ability to:
 
-- set up a small JavaScript/TypeScript project to run reliably (locally + in Docker),
+- set up a small JavaScript/TypeScript project to run reliably (locally and in Docker),
 - pin dependencies for reproducible installs,
 - write focused tests to reproduce a bug,
 - implement a minimal, reviewable fix.
 
-## What you will do
+---
 
-### 1) Dockerfile (required)
+## Project Overview
 
-Create a `Dockerfile` so the project can run the test suite in a non-interactive, CI-style environment.
+This repository contains a minimal OAuth2 HTTP client implemented in TypeScript and tested using Vitest.
 
-Requirements:
+The project demonstrates:
 
-- Your Docker image must run the test suite by default using npm test.
-- Ensure npm test works in a clean environment (Docker) without manual steps.
-- The build must install dependencies from package.json using npm install.
-- The image must run tests by default (use: `CMD ["npm", "test"]`).
+- reproducible dependency installation,
+- debugging through failing tests,
+- applying a minimal fix,
+- running tests consistently both locally and inside a Docker-based CI environment.
 
-### 2) Pin dependencies (required)
+---
 
-- Pin dependency versions in package.json (no ^ / ~; use exact x.y.z).
-- Do not commit lockfiles (package-lock.json, yarn.lock, pnpm-lock.yaml).
+## What Was Implemented
 
-### 3) README updates (required)
+### ✅ Dockerfile
 
-Update this README to include:
+A Dockerfile was added to allow the test suite to run in a clean, non-interactive CI-style environment.
 
-- how to run the tests locally,
-- how to build and run tests with Docker.
+The container:
 
-### 4) Find + fix a bug (required)
+- installs dependencies using `npm install`
+- runs tests automatically
+- executes `npm test` by default
 
-There is a bug somewhere in this repository.
+---
 
-Your tasks:
+### ✅ Pinned Dependencies
 
-- Identify the bug.
-- Apply the smallest possible fix to make the tests pass.
-- Keep the change minimal and reviewable (no refactors).
+All dependencies in `package.json` are pinned to exact versions (`x.y.z`) to ensure reproducible installs across environments.
 
-## Constraints
+Lockfiles are intentionally excluded as required.
 
-- Keep changes minimal and reviewable.
-- Do not refactor unrelated code.
-- Do not introduce extra tooling unless required.
-- You may add tests and the smallest code change needed to fix the bug.
+---
 
-### 5) EXPLANATION.md (required)
+### ✅ Bug Fix
 
-Create `EXPLANATION.md` (max 250 words) containing:
+A bug existed in the OAuth2 token handling logic.
 
-- **What was the bug?**
-- **Why did it happen?**
-- **Why does your fix solve it?**
-- **One realistic case / edge case your tests still don’t cover**
+When the stored token was a plain JavaScript object instead of an `OAuth2Token` instance, the client failed to refresh the token and did not attach the Authorization header.
 
-## Submission
+The fix ensures the token is refreshed when it is:
 
-- Submit a public GitHub repository URL containing your solution to the Google form link provided.
+- missing,
+- not an `OAuth2Token` instance,
+- or expired.
+
+The change was intentionally minimal and reviewable.
+
+---
+
+## Running Tests Locally
+
+### 1. Install dependencies
+
+`npm install`
+
+### 2. Run tests
+
+`npm test`
+
+All tests should pass successfully.
+
+#### Running Tests with Docker
+
+1. Build the Docker image
+
+`docker build -t ai-assignment .`
+
+2. Run tests inside Docker
+
+`docker run --rm ai-assignment`
+
+The container automatically runs the test suite using:
+
+`npm test`
+
+No manual steps are required.

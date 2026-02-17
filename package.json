@@ -1,0 +1,13 @@
+{
+  "name": "ai-software-engineer-assignment-ts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "25.2.3",
+    "typescript": "5.9.3",
+    "vitest": "4.0.18"
+  }
+}
