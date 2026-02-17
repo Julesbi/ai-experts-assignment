@@ -72,7 +72,7 @@ The change was intentionally minimal and reviewable.
 
 All tests should pass successfully.
 
-#### Running Tests with Docker
+### Running Tests with Docker
 
 1. Build the Docker image
 
